@@ -23,15 +23,11 @@ my $tests = join ' ',unix2os('t/Net/Netid.t');
 WriteMakefile(
     NAME => 'Net::Netid',
     DISTNAME => 'Net-Netid',
-    VERSION  => '0.01',
+    VERSION  => '0.02',
     dist     => {COMPRESS => 'gzip',
                 'gz' => 'gz'},
     test     => {TESTS => $tests},
-    PREREQ_PM => {'File::TestPath' => '1.1',
-                  'File::SmartNL' => '1.1',
-                  'File::Package' => '1.1',
-                  'Test::Tech' => '1.1',
-                  'Data::Str2Num' => '0',
+    PREREQ_PM => {'Data::Str2Num' => '0',
                   'Proc::Command' => '0',},
     
 

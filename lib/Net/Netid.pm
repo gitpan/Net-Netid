@@ -21,14 +21,14 @@ use Data::Str2Num qw(str2int);
 # Connect up with the event log.
 #
 use vars qw( $VERSION $DATE $FILE);
-$VERSION = '0.01';
-$DATE = '2003/07/20';
+$VERSION = '0.02';
+$DATE = '2003/07/27';
 $FILE = __FILE__;
 
 use vars qw(@ISA @EXPORT_OK);
 require Exporter;
 @ISA=('Exporter');
-@EXPORT_OK = qw(&netid &ipid &net2dot &dot2net &net2num &ip2dot &clean_ip_str
+@EXPORT_OK = qw(&netid &ipid &net2dot &dot2net &net2num &ip2dot &dot2dec &clean_ip_str
                 &clean_netid &clean_ipid &clean_ip2dot);
 
 use SelfLoader;
@@ -266,23 +266,66 @@ sub ip2dot
     my $num = str2int( $ip_addr_str );
     if( defined($num) ) {
         return net2dot($num) if($network && (length($num) == 4));
-        return undef;            
+        while($num) {
+            unshift @num, $num % 256;
+            last if $num < 256;
+            $num = $num / 256;
+        }
+        return undef if 4 < @num;
+        while( @num < 4 ) {
+            unshift @num,0;
+        } 
     }
 
-    if($ip_addr_str =~  /^\s*(\w+)\.\s*(\w+)\.\s*(\w+)\.\s*(\w+)$/) {
+    elsif($ip_addr_str =~  /^\s*(\w+)\.\s*(\w+)\.\s*(\w+)\.\s*(\w+)$/) {
         @num =  ($1,$2,$3,$4);
         foreach $num (@num) {
             $num = str2int( $num );
             return undef unless(defined $num); 
             return undef if( $num<0 || 255<$num); 
         }
-        return "$num[0].$num[1].$num[2].$num[3]";
     }
 
-    return undef;
+    else {
+        return undef;
+    }
+    return "$num[0].$num[1].$num[2].$num[3]";
 
 }
 
+
+######
+# Convert dot notation to decimal
+#
+sub dot2dec
+{
+    return undef unless(defined($_[0]));
+    shift @_ if $_[0] eq 'Net::Netid' || ref($_[0]);  # drop self on object call 
+    my ($ip) = @_;
+    return undef unless defined $ip;
+
+    my @dec = split( /\./, $ip );
+    if( 4 < @dec ) {
+        warn( "$ip is not a valid IP address\n");
+        return undef;
+    }
+
+    $ip = 0;
+    foreach my $dec (@dec) {
+       $ip = (256 * $ip) + $dec;
+    }
+
+    ####
+    # Some only give the significant bits
+    # assuming that the least significant 
+    # are zero
+    #
+    for( my $i=0; $i < (4-@dec); $i++) { 
+       $ip = (256 * $ip);
+    }
+    $ip;
+
+}
 
 #####
 # Convert a net packed number to dot notation.
@@ -697,7 +740,7 @@ follow on the next lines. For example,
  [
            'www.google.com',
            'ns1.google.com',
-           'smtp.google.com'
+           ''
          ]
 
  =>     $hash_p =  Net::Netid->clean_netid($hash_p->{ip_addr_dot});

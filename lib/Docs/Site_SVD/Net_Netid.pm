@@ -10,20 +10,22 @@ use warnings;
 use warnings::register;
 
 use vars qw($VERSION $DATE $FILE );
-$VERSION = '0.01';
-$DATE = '2003/07/20';
+$VERSION = '0.02';
+$DATE = '2003/07/27';
 $FILE = __FILE__;
 
 use vars qw(%INVENTORY);
 %INVENTORY = (
-    'lib/Docs/Site_SVD/Net_Netid.pm' => [qw(0.01 2003/07/20), 'new'],
-    'MANIFEST' => [qw(0.01 2003/07/20), 'generated new'],
-    'Makefile.PL' => [qw(0.01 2003/07/20), 'generated new'],
-    'README' => [qw(0.01 2003/07/20), 'generated new'],
-    'lib/Net/Netid.pm' => [qw(0.01 2003/07/20), 'new'],
-    't/Net/Netid.d' => [qw(0.01 2003/07/20), 'new'],
-    't/Net/Netid.pm' => [qw(0.01 2003/07/20), 'new'],
-    't/Net/Netid.t' => [qw(0.01 2003/07/20), 'new'],
+    'lib/Docs/Site_SVD/Net_Netid.pm' => [qw(0.02 2003/07/27), 'revised 0.01'],
+    'MANIFEST' => [qw(0.02 2003/07/27), 'generated, replaces 0.01'],
+    'Makefile.PL' => [qw(0.02 2003/07/27), 'generated, replaces 0.01'],
+    'README' => [qw(0.02 2003/07/27), 'generated, replaces 0.01'],
+    'lib/Net/Netid.pm' => [qw(0.02 2003/07/27), 'revised 0.01'],
+    't/Net/Netid.d' => [qw(0.01 2003/07/20), 'unchanged'],
+    't/Net/Netid.pm' => [qw(0.01 2003/07/20), 'unchanged'],
+    't/Net/Netid.t' => [qw(0.02 2003/07/27), 'revised 0.01'],
+    'tlib/File/Package.pm' => [qw(1.11 2003/07/27), 'new'],
+    'tlib/Test/Tech.pm' => [qw(1.11 2003/07/27), 'new'],
 
 );
 
@@ -50,11 +52,11 @@ use vars qw(%INVENTORY);
 
  Net::Netid - obtain basic IP host identfications from Domain Name Servers
 
- Revision: -
+ Revision: A
 
- Version: 0.01
+ Version: 0.02
 
- Date: 2003/07/20
+ Date: 2003/07/27
 
  Prepared for: General Public 
 
@@ -87,7 +89,7 @@ host from Internet Domain Name Servers (DNS).
 
 =head2 1.3 Document overview.
 
-This document releases Net::Netid version 0.01
+This document releases Net::Netid version 0.02
 providing a description of the inventory, installation
 instructions and other information necessary to
 utilize and track this release.
@@ -103,8 +105,8 @@ system file specification.
 This document releases the file found
 at the following repository(s):
 
-   http://www.softwarediamonds/packages/Net-Netid-0.01
-   http://www.perl.com/CPAN-local/authors/id/S/SO/SOFTDIA/Net-Netid-0.01
+   http://www.softwarediamonds/packages/Net-Netid-0.02
+   http://www.perl.com/CPAN-local/authors/id/S/SO/SOFTDIA/Net-Netid-0.02
 
 
 Restrictions regarding duplication and license provisions
@@ -172,14 +174,16 @@ consists of the following files:
 
  file                                                         version date       comment
  ------------------------------------------------------------ ------- ---------- ------------------------
- lib/Docs/Site_SVD/Net_Netid.pm                               0.01    2003/07/20 new
- MANIFEST                                                     0.01    2003/07/20 generated new
- Makefile.PL                                                  0.01    2003/07/20 generated new
- README                                                       0.01    2003/07/20 generated new
- lib/Net/Netid.pm                                             0.01    2003/07/20 new
- t/Net/Netid.d                                                0.01    2003/07/20 new
- t/Net/Netid.pm                                               0.01    2003/07/20 new
- t/Net/Netid.t                                                0.01    2003/07/20 new
+ lib/Docs/Site_SVD/Net_Netid.pm                               0.02    2003/07/27 revised 0.01
+ MANIFEST                                                     0.02    2003/07/27 generated, replaces 0.01
+ Makefile.PL                                                  0.02    2003/07/27 generated, replaces 0.01
+ README                                                       0.02    2003/07/27 generated, replaces 0.01
+ lib/Net/Netid.pm                                             0.02    2003/07/27 revised 0.01
+ t/Net/Netid.d                                                0.01    2003/07/20 unchanged
+ t/Net/Netid.pm                                               0.01    2003/07/20 unchanged
+ t/Net/Netid.t                                                0.02    2003/07/27 revised 0.01
+ tlib/File/Package.pm                                         1.11    2003/07/27 new
+ tlib/Test/Tech.pm                                            1.11    2003/07/27 new
 
 
 =head2 3.3 Changes
@@ -191,6 +195,17 @@ Changes are as follows
 =item Net::Netid 0.01
 
 Originated
+
+=item Net::Netid 0.02
+
+Change the test so that test support program modules resides in distribution
+directory tlib directory instead of the lib directory. 
+Because they are no longer in the lib directory, 
+test support files will not be installed as a pre-condition for the 
+test of this module.
+The test of this module will precede immediately.
+The test support files in the tlib directory will vanish after
+the installtion.
 
 =back
 
@@ -225,16 +240,12 @@ Follow the instructions for the the chosen installation software.
 
 The distribution file is at the following respositories:
 
-   http://www.softwarediamonds/packages/Net-Netid-0.01
-   http://www.perl.com/CPAN-local/authors/id/S/SO/SOFTDIA/Net-Netid-0.01
+   http://www.softwarediamonds/packages/Net-Netid-0.02
+   http://www.perl.com/CPAN-local/authors/id/S/SO/SOFTDIA/Net-Netid-0.02
 
 
 =item Prerequistes.
 
- 'File::TestPath' => '1.1',
- 'File::SmartNL' => '1.1',
- 'File::Package' => '1.1',
- 'Test::Tech' => '1.1',
  'Data::Str2Num' => '0',
  'Proc::Command' => '0',
 
@@ -314,7 +325,13 @@ extension for a Perl test script file
 
 =head1 2.0 SEE ALSO
 
-L<Net::Netid|Net::Netid>
+=over 4
+
+=item L<Net::Netid|Net::Netid> 
+
+=item L<Docs::US_DOD::SVD|Docs::US_DOD::SVD> 
+
+=back
 
 =for html
 <hr>
@@ -338,11 +355,11 @@ __DATA__
 DISTNAME: Net-Netid^
 REPOSITORY_DIR: packages^
 
-VERSION : 0.01^
+VERSION : 0.02^
 FREEZE: 1^
 PREVIOUS_DISTNAME:  ^
-REVISION: -^
-PREVIOUS_RELEASE:  ^
+PREVIOUS_RELEASE: 0.01^
+REVISION: A^
 
 AUTHOR  : SoftwareDiamonds.com E<lt>support@SoftwareDiamonds.comE<gt>^
 ABSTRACT: obtain basic IP host identfications from Domain Name Servers^
@@ -369,13 +386,11 @@ CHANGE2CURRENT:  ^
 AUTO_REVISE: 
 lib/Net/Netid.pm
 t/Net/Netid.*
+lib/File/Package.pm => tlib/File/Package.pm
+lib/Test/Tech.pm => tlib/Test/Tech.pm
 ^
 
 PREREQ_PM:
-'File::TestPath' => '1.1',
-'File::SmartNL' => '1.1',
-'File::Package' => '1.1',
-'Test::Tech' => '1.1',
 'Data::Str2Num' => '0',
 'Proc::Command' => '0',
 ^
@@ -392,6 +407,17 @@ Changes are as follows
 \=item Net::Netid 0.01
 
 Originated
+
+\=item Net::Netid 0.02
+
+Change the test so that test support program modules resides in distribution
+directory tlib directory instead of the lib directory. 
+Because they are no longer in the lib directory, 
+test support files will not be installed as a pre-condition for the 
+test of this module.
+The test of this module will precede immediately.
+The test support files in the tlib directory will vanish after
+the installtion.
 
 \=back
 ^
@@ -525,10 +551,14 @@ extension for a Perl test script file
 \=back
 ^
 
-SEE_ALSO:
+SEE_ALSO: 
+\=over 4
 
-L<Net::Netid|Net::Netid>
+\=item L<Net::Netid|Net::Netid> 
 
+\=item L<Docs::US_DOD::SVD|Docs::US_DOD::SVD> 
+
+\=back
 ^
 
 HTML:
